@@ -2,7 +2,7 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-
+import re
 
 #function to get job list from url f'https://www.talent.com/jobs?k={role}&l={location}'
 def getJobList(role,location):
@@ -11,7 +11,7 @@ def getJobList(role,location):
     # Complete the missing part of this function here
     response = requests.get(url)
     print(response.status_code) # Print status code
-    soup =   BeautifulSoup(response, 'html.parser')
+    soup = BeautifulSoup(response.content, 'html.parser')
     JobDetails = soup.find_all('div', class_='card card__job')
     array = []
     for job in JobDetails:
@@ -24,7 +24,7 @@ def getJobList(role,location):
            "Description": description
        }
        # Add jobDetailsjson to that array
-       array[job] = jobDetailsjson
+       array.append(jobDetailsjson)
     return array
 
 
@@ -42,6 +42,11 @@ def main():
     # Complete the missing part of this function here
     print("Enter location you want to search:")
     location = input()
+
+    # Print the job search results
+    results = getJobList(role, location)
+    print(results)
+    
 
 if __name__ == '__main__':
     main()
