@@ -31,8 +31,9 @@ def getJobList(role,location):
 #save data in JSON file
 def saveDataInJSON(jobDetails):
     #Complete the missing part of this function here
-    
-    print("Saving data to JSON")
+    with open('jobDetails.json', 'w') as outfile:
+        json.dumps(jobDetails)
+    print("Saving data to JSON...")
 
 #main function
 def main():
@@ -46,6 +47,9 @@ def main():
     # Print the job search results
     results = getJobList(role, location)
     print(results)
+
+    # Save results to a JSON file 
+    saveDataInJSON(results)
     
 
 if __name__ == '__main__':
